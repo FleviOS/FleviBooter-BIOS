@@ -1,0 +1,19 @@
+# Ignore object files, binaries, etc. inside this repo only
+*.o
+*.obj
+*.exe
+*.dll
+
+# Ignore logs and temp files
+*.log
+*.tmp
+*.temp
+
+# Editor configs (optional)
+.vscode/
+.idea/
+*.swp
+
+# Backup files
+*~
+*.bak
