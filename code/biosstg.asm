@@ -30,6 +30,7 @@ puts:
     mov ah, 0x0E      ; E.
     mov bh, 0         ; Null Bicycle
     int 0x10          ; We are sorry to interrupt this CPU process to speak to Mr. BIOS
+    jmp .loop         ; Falling backwards to line 25.
 
 .done:
     pop ax            ; POP!
@@ -51,10 +52,10 @@ main:                 ; Our starting point
 
     hlt               ; EMERGENCY FOUND! ENABLE INSTANT CPU STOP!
 
-.halt:                ; In case the CPU decides to unhsalt.
+.halt:                ; In case the CPU decides to unhalt.
     jmp .halt         ; INFINITE LOOP
 
-msg_hello: 'Hello the vast FOSS world to Flevi!', ENDL
+msg_hello: db 'Hello the vast FOSS world to Flevi!', ENDL, 0
 
 times 510-($-$$) db 0 ; Padding galore!
 db 055h               ; Special BIOS sign PART I!
