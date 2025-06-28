@@ -17,6 +17,9 @@ main:                 ; Our starting point
     mov ax,0          ; Data segments
     mov ds,ax
     mov es,ax         ; Done!
+
+    mov ss,ax         ; Stack setup time!
+    mov p,0x7C00
     hlt               ; Instant CPU stop
 
 .halt:                ; In case the CPU decides to unhalt.
