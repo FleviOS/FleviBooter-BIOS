@@ -14,6 +14,9 @@ bits 16               ; This is real mode (16-bits) right now.
 
 
 main:                 ; Our starting point
+    mov ax,0          ; Data segments
+    mov ds,ax
+    mov es,ax         ; Done!
     hlt               ; Instant CPU stop
 
 .halt:                ; In case the CPU decides to unhalt.
