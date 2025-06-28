@@ -19,7 +19,7 @@ main:                 ; Our starting point
     mov es,ax         ; Done!
 
     mov ss,ax         ; Stack setup time!
-    mov p,0x7C00
+    mov p,0x7C00      ; Stack setup complete!
     hlt               ; Instant CPU stop
 
 .halt:                ; In case the CPU decides to unhalt.
