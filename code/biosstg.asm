@@ -15,6 +15,33 @@ bits 16               ; This is real mode (16-bits) right now.
 ; DEFINITIONS
 %define ENDL 0x0D, 0x0A
 
+; FAT12 HEADER
+jmp short start
+nop
+bdb_oem:                   db 'MSWIN4.1' ; Drive 'OEM' (8 bytes)
+bdb_bytes_per_sector:      dw 512
+bdb_sectors_per_cluster:   db 1
+bdb_reserved_sectors:      dw 1
+bdb_fat_count:             db 2
+bdb_dir_entries_count:     dw 0E0h
+bdb_total_sectors:         dw 2880        ; 2880hKB * 512 = 1.44MB; hKB = half KiloBytes
+bdb_media_descriptor_type: db 0F0h        ; 3.5"
+bdb_sectors_per_fat:       dw 9
+bdb_sectors_per_track:     dw 18
+bdb_heads:                 dw 2
+bdb_hidden_sectors:        dd 0
+bdb_large_sector_count:    dd 0
+
+; EXTENDED BOOT RECORD
+ebr_drive_number:          db 0                  ; 0x00 = Floppy Disk, 0x80 = Hard Drive, Kinda useless
+                           db 0                  ; UNKNOWN RESERVED VALUE
+abr_signiture:             db 29h                ; DO NOT CHANGE
+ebr_volume_id:             db 12h, 34h, 56h, 78h ; Anything field
+ebr_volume_label:          db 'FLEVI DEV  '      ; Space-padded, 11 bytes
+ebr_system_id:             db 'FAT12   '         ; Space-padded, 8 bytes
+
+; Back to ASM code
+
 start:
     jmp main
 
@@ -55,7 +82,7 @@ main:                 ; Our starting point
 .halt:                ; In case the CPU decides to unhalt.
     jmp .halt         ; INFINITE LOOP
 
-msg_hello: db 'Hello the vast FOSS world to Flevi!', ENDL, 0
+msg_hello: db 'FleviBooter (16-bit real mode)', ENDL, 0
 
 times 510-($-$$) db 0 ; Padding galore!
 db 055h               ; Special BIOS sign PART I!
